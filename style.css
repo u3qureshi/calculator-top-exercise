@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Digital';
+    src: url(./fonts/Digital.ttf);
+}
+
+* {
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 500;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(to top, rgb(16, 16, 16), rgb(132, 132, 0));
+}
+
+.grid-main {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 150px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+}
+
+button {
+    cursor: pointer;
+    font-size: 30px;
+    border: 2px solid rgb(16, 16, 16);
+    outline: none;
+    background-color: rgba(255, 255, 0, 0.642);
+}
+
+button:hover {
+    background-color: rgb(246, 246, 166);
+    border: 2px solid rgb(246, 246, 166);
+}
+
+.clear-button,
+.equals-button {
+    grid-column: span 2;
+}
+
+.screen {
+    grid-column: 1/-1;
+    background-color: rgba(0, 0, 0, 0.50);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 15px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.screen .previous-output {
+    color: lightyellow;
+    font-family: 'Digital', sans-serif;
+    font-size: 1.4em;
+}
+
+.screen .current-output {
+    color: lightyellow;
+    font-family: 'Digital', sans-serif;
+    font-size: 3.6em;
+}
