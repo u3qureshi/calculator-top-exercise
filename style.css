@@ -8,6 +8,14 @@
     font-weight: 500;
 }
 
+h1 {
+    font-weight: 900;
+    font-style: italic;
+    margin: 0;
+    margin-left: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -15,20 +23,30 @@ body {
 }
 
 .grid-main {
+    margin: 0;
     display: grid;
     justify-content: center;
     align-content: center;
     min-height: 100vh;
-    grid-template-columns: repeat(4, 150px);
-    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    grid-template-columns: repeat(4, 120px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 80px);
 }
 
 button {
+    padding: 15px 25px;
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
     cursor: pointer;
+    outline: none;
+    color: black;
     font-size: 30px;
     border: 2px solid rgb(16, 16, 16);
     outline: none;
     background-color: rgba(255, 255, 0, 0.642);
+    border-radius: 15px;
+    box-shadow: 0 9px rgb(71, 71, 39);
+    text-align: center;
 }
 
 button:hover {
@@ -36,12 +54,26 @@ button:hover {
     border: 2px solid rgb(246, 246, 166);
 }
 
+button:active {
+    background-color: #5c5e5c;
+    box-shadow: 0 5px rgb(71, 71, 39);
+    color: lightyellow;
+    transform: translateY(3px);
+}
+
 .clear-button,
 .equals-button {
     grid-column: span 2;
 }
 
+.clear-button,
+.delete-button {
+    font-size: 20px;
+}
+
 .screen {
+    box-shadow: 0 9px rgb(71, 71, 39);
+    border: 2px solid rgb(16, 16, 16);
     grid-column: 1/-1;
     background-color: rgba(0, 0, 0, 0.50);
     display: flex;
