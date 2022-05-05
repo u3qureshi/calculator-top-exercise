@@ -56,9 +56,8 @@ button:hover {
 }
 
 button:active {
-    background-color: #5c5e5c;
+    background-color: rgb(207, 207, 0);
     box-shadow: 0 5px rgb(71, 71, 39);
-    color: lightyellow;
     transform: translateY(3px);
 }
 
@@ -96,4 +95,28 @@ button:active {
     color: lightyellow;
     font-family: 'Digital', sans-serif;
     font-size: 3.6em;
+}
+
+#copyright {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 2px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+}
+
+.fa {
+    padding-left: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: yellow;
+}
+
+
+/* Add a hover effect if you want */
+
+.fa:hover {
+    transition: 0.5s;
+    transform: scale(1.4);
 }

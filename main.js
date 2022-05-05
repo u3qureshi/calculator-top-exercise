@@ -8,11 +8,6 @@ class Calculator {
         this.currentOutputText = currentOutputText;
         this.clear();
     }
-    isCalculated() {
-        if (this.expression != '' && this.currentUnit != '' && this.previousUnit != '')
-            return true;
-        else return false;
-    }
     add() {
 
     }
@@ -32,10 +27,12 @@ class Calculator {
         this.updateScreen();
     }
     delete() {
-        if (this.isCalculated()) {
-            this.currentUnit = this.currentUnit.slice(0, -1);
-            this.updateScreen();
+        if (this.currentOutputText.innerText.includes('=')) {
+            return;
         }
+        this.currentUnit = this.currentUnit.slice(0, -1);
+        this.updateScreen();
+
     }
     appendDigit(digit) {
         this.currentUnit = this.currentUnit.toString() + digit.toString();
@@ -80,7 +77,7 @@ class Calculator {
     }
     compute() {
 
-        if (this.isCalculated()) {
+        if (this.expression != '' && this.currentUnit != '' && this.previousUnit != '') {
             //Get lastChar of the upper expression, and if it is an operator then delete it
             let lastChar = this.expression.charAt(this.expression.length - 1);
             if (lastChar == '+' || lastChar == '/' || lastChar == '*' || lastChar == '-') {
@@ -114,12 +111,7 @@ class Calculator {
             this.expression = '';
             this.currentUnit = '';
             this.previousUnit = '';
-
         } else return;
-
-        console.log(previousOutputText.textContent);
-        console.log(currentOutputText.textContent);
-
 
     }
     updateScreen() {
@@ -175,9 +167,7 @@ operatorButtons.forEach(operatorButton => {
 
         }
         calculator.updateScreen();
-
     });
-
 });
 
 clearButton.addEventListener('click', () => calculator.clear());
