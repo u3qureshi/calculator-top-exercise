@@ -135,8 +135,11 @@ digitButtons.forEach(digitButton => {
     digitButton.addEventListener('click', () => {
         if (currentOutputText.textContent.toString().includes('.') && digitButton.getAttribute('data-digit') == '.')
             return;
-        if (currentOutputText.textContent == '' && digitButton.getAttribute('data-digit') == '.')
+
+        //Multiple zeros barrier 
+        if (digitButton.getAttribute('data-digit') == '0' && !currentOutputText.textContent.toString().includes('.') && currentOutputText.textContent.toString().includes('0'))
             return;
+
         calculator.appendDigit(digitButton.innerText);
         calculator.updateScreen();
 
