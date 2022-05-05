@@ -1,9 +1,17 @@
 class Calculator {
 
+    expression = '';
+    operator = '';
+    currentResult = 0.0;
     constructor(previousOutputText, currentOutputText) {
         this.previousOutputText = previousOutputText;
         this.currentOutputText = currentOutputText;
         this.clear();
+    }
+    isCalculated() {
+        if (this.expression != '' && this.currentUnit != '' && this.previousUnit != '')
+            return true;
+        else return false;
     }
     add() {
 
@@ -24,19 +32,99 @@ class Calculator {
         this.updateScreen();
     }
     delete() {
-
+        if (this.isCalculated()) {
+            this.currentUnit = this.currentUnit.slice(0, -1);
+            this.updateScreen();
+        }
     }
     appendDigit(digit) {
         this.currentUnit = this.currentUnit.toString() + digit.toString();
     }
-    selectOperator(operator) {
+    selectOperator(op) {
+        this.operator = op;
+        let newOperator = '';
+        switch (op) {
+            case '/':
+                newOperator = '÷';
+                calculator.divide();
+                break;
+            case '+':
+                newOperator = '+';
+                calculator.add();
+                break;
+            case '-':
+                newOperator = '−';
+                calculator.subtract();
+                break;
+            case '*':
+                newOperator = '×';
+                calculator.multiply();
+                break;
+
+        }
+        if (this.previousUnit == '') {
+            this.previousUnit = this.currentUnit + newOperator;
+        } else {
+            this.previousUnit = this.previousUnit + this.currentUnit + newOperator;
+
+        }
+
+        if (this.previousUnit == '') {
+            this.expression = this.currentUnit + op;
+        } else {
+            this.expression += this.currentUnit + op;
+
+        }
+        this.currentUnit = '';
 
     }
     compute() {
 
+        if (this.isCalculated()) {
+            //Get lastChar of the upper expression, and if it is an operator then delete it
+            let lastChar = this.expression.charAt(this.expression.length - 1);
+            if (lastChar == '+' || lastChar == '/' || lastChar == '*' || lastChar == '-') {
+                if (currentOutputText.textContent == '')
+                    this.expression = this.expression.slice(0, -1);
+                else
+                    this.expression = this.expression + currentOutputText.textContent;
+            } else {
+                this.expression = this.previousUnit;
+            }
+            let answer = eval(this.expression);
+            this.previousOutputText.textContent = this.previousUnit + currentOutputText.textContent;
+            this.currentOutputText.textContent = '=           ' + answer.toString();
+            this.expression = '';
+            this.currentUnit = '';
+            this.previousUnit = '';
+        } else if (this.previousUnit != '') {
+            //Get lastChar of the upper expression, and if it is an operator then delete it
+            let lastChar = this.expression.charAt(this.expression.length - 1);
+            if (lastChar == '+' || lastChar == '/' || lastChar == '*' || lastChar == '-') {
+                if (currentOutputText.textContent == '')
+                    this.expression = this.expression.slice(0, -1);
+                else
+                    this.expression = this.expression + currentOutputText.textContent;
+            } else {
+                this.expression = this.previousUnit;
+            }
+            let answer = eval(this.expression);
+            this.previousOutputText.textContent = this.previousUnit + currentOutputText.textContent;
+            this.currentOutputText.textContent = '=           ' + answer.toString();
+            this.expression = '';
+            this.currentUnit = '';
+            this.previousUnit = '';
+
+        } else return;
+
+        console.log(previousOutputText.textContent);
+        console.log(currentOutputText.textContent);
+
+
     }
     updateScreen() {
         this.currentOutputText.innerText = this.currentUnit;
+        this.previousOutputText.innerText = this.previousUnit;
     }
 }
 
@@ -55,19 +143,45 @@ digitButtons.forEach(digitButton => {
     digitButton.addEventListener('click', () => {
         if (currentOutputText.textContent.toString().includes('.') && digitButton.getAttribute('data-digit') == '.')
             return;
+        if (currentOutputText.textContent == '' && digitButton.getAttribute('data-digit') == '.')
+            return;
         calculator.appendDigit(digitButton.innerText);
         calculator.updateScreen();
+
     });
 });
 operatorButtons.forEach(operatorButton => {
     operatorButton.addEventListener('click', () => {
-        let text = currentOutputText.innerText.toString();
+        let text = previousOutputText.innerText.toString();
         let lastChar = text.charAt(text.length - 1);
-        if (lastChar == '+' || lastChar == '÷' || lastChar == '×' || lastChar == '−')
+        if ((lastChar == '+' || lastChar == '÷' || lastChar == '×' || lastChar == '−' || currentOutputText.textContent == '') && (currentOutputText.textContent == ''))
             return;
-        calculator.appendDigit(operatorButton.textContent);
+        switch (operatorButton.getAttribute('data-operator')) {
+            case '/':
+                calculator.selectOperator('/');
+                break;
+            case '+':
+                calculator.selectOperator('+');
+                break;
+            case '-':
+                calculator.selectOperator('-');
+                break;
+            case '*':
+                calculator.selectOperator('*');
+                break;
+            case '=':
+                calculator.selectOperator('=');
+                break;
+
+        }
         calculator.updateScreen();
-    })
-})
+
+    });
+
+});
 
 clearButton.addEventListener('click', () => calculator.clear());
+
+equalsButton.addEventListener('click', () => calculator.compute());
+
+deleteButton.addEventListener('click', () => calculator.delete());
